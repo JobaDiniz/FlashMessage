@@ -18,10 +18,18 @@
         <GradientStop Color="#FF89FF89" Offset="0.797"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="flashMessageNoticeBackground" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="#FFFDFEAD"/>
+        <GradientStop Color="#FFF0F17F" Offset="1"/>
+        <GradientStop Color="#FFF6F797" Offset="0.487"/>
+        <GradientStop Color="#FFFAFBA3" Offset="0.228"/>
+        <GradientStop Color="#FFF3F48C" Offset="0.797"/>
+    </LinearGradientBrush>
+
     <Style TargetType="Image" x:Key="flashMessageImageButton">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="/WPFControls;component/FlashMessage/Images/close_8.png"/>
+        <Setter Property="Source" Value="pack://application:,,,/FlashMessage;component/Images/close_8.png"/>
         <Setter Property="Stretch" Value="None"/>
     </Style>
     <Style TargetType="Button" x:Key="flashMessageButton">
@@ -77,20 +85,21 @@
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
 
-                            <ContentControl Grid.Column="0" x:Name="PART_item" ContentTemplate="{TemplateBinding ContentDataTemplate}"
+                            <ContentControl Grid.Column="0" ContentTemplate="{TemplateBinding ContentDataTemplate}"
                                             Content="{TemplateBinding Message}"/>
-                            <Button Grid.Column="1" Cursor="Hand" ToolTip="Click to hide" Command="Close"/>
+                            <Button Grid.Column="1" x:Name="PART_button" Cursor="Hand" ToolTip="Click to hide" Command="Close"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="MessageType" Value="Error">
                             <Setter Property="Background" TargetName="PART_border" Value="{StaticResource flashMessageErrorBackground}"/>
+                            <Setter Property="Style" TargetName="PART_button" Value="{StaticResource flashMessageErrorButton}"/>
                         </Trigger>
                         <Trigger Property="MessageType" Value="Success">
                             <Setter Property="Background" TargetName="PART_border" Value="{StaticResource flashMessageSuccessBackground}"/>
                         </Trigger>
                         <Trigger Property="MessageType" Value="Notice">
-                            <Setter Property="Background" TargetName="PART_border" Value="Yellow"/>
+                            <Setter Property="Background" TargetName="PART_border" Value="{StaticResource flashMessageNoticeBackground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -86,16 +86,7 @@ namespace FlashMessage
 
         private void OnMessageChanged()
         {
-            if (string.IsNullOrEmpty(this.Message))
-            {
-                //this.Visibility = System.Windows.Visibility.Collapsed;
-                this.StartFadeOutAnimation();
-            }
-            else
-            {
-                this.Visibility = System.Windows.Visibility.Visible;
-                this.StartTimerIfAutomatically();
-            }
+            this.IsFlashMessageVisible = !string.IsNullOrEmpty(this.Message);
         }
         #endregion
 
@@ -112,7 +103,7 @@ namespace FlashMessage
 
         #region Reset
         internal static DependencyProperty ResetProperty =
-          DependencyProperty.Register("Reset", typeof(bool), typeof(FlashMessage), new PropertyMetadata(OnResetPropertyChanged));
+          DependencyProperty.Register("Reset", typeof(bool), typeof(FlashMessage), new PropertyMetadata(OnResetChanged));
 
         internal bool Reset
         {
@@ -120,21 +111,52 @@ namespace FlashMessage
             set { SetValue(ResetProperty, value); }
         }
 
-        private static void OnResetPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnResetChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            ((FlashMessage)o).OnResetPropertyChanged();
+            ((FlashMessage)o).OnResetChanged();
         }
 
-        private void OnResetPropertyChanged()
+        private void OnResetChanged()
         {
-            this.Visibility = System.Windows.Visibility.Collapsed;
+            if (this.Reset)
+            {
+                this.Visibility = System.Windows.Visibility.Collapsed;
+                this.Message = null;
+            }
+        }
+        #endregion
+
+        #region IsFlashMessageVisible
+        internal static DependencyProperty IsFlashMessageVisibleProperty =
+          DependencyProperty.Register("IsFlashMessageVisible", typeof(bool), typeof(FlashMessage), new PropertyMetadata(OnIsFlashMessageVisibleChanged));
+
+        internal bool IsFlashMessageVisible
+        {
+            get { return (bool)GetValue(IsFlashMessageVisibleProperty); }
+            set { SetValue(IsFlashMessageVisibleProperty, value); }
+        }
+
+        private static void OnIsFlashMessageVisibleChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            ((FlashMessage)o).OnIsFlashMessageVisibleChanged();
+        }
+
+        private void OnIsFlashMessageVisibleChanged()
+        {
+            if (this.IsFlashMessageVisible)
+            {
+                this.Visibility = System.Windows.Visibility.Visible;
+                this.StartTimerIfAutomatically();
+            }
+            else
+                this.StartFadeOutAnimation();
         }
         #endregion
 
         public void Hide()
         {
             this.StopTimerIfRunning();
-            this.Message = null;
+            this.IsFlashMessageVisible = false;
         }
 
         public override void OnApplyTemplate()
