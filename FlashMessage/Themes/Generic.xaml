@@ -39,6 +39,7 @@
         <Setter Property="Height" Value="22"/>
     </Style>
 
+    <!--TODO: ColorAnimation.To={TemplateBinding BorderBrush}; currently this won't work.-->
     <Style TargetType="Button" BasedOn="{StaticResource flashMessageButton}" x:Key="flashMessageErrorButton">
         <Setter Property="BorderBrush" Value="#E89D9D"/>
         <Setter Property="Template">
@@ -67,14 +68,70 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="Button" BasedOn="{StaticResource flashMessageButton}" x:Key="flashMessageSuccessButton">
+        <Setter Property="BorderBrush" Value="#52ED52"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse x:Name="imageButtonBorder" Fill="Transparent" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
+                        <Image Style="{StaticResource flashMessageImageButton}" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="imageButtonBorder" Storyboard.TargetProperty="Fill.Color" To="#52ED52" Duration="0:00:0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="imageButtonBorder" Storyboard.TargetProperty="Fill.Color" To="Transparent" Duration="0:00:0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Button" BasedOn="{StaticResource flashMessageButton}" x:Key="flashMessageNoticeButton">
+        <Setter Property="BorderBrush" Value="#FFEEEF65"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse x:Name="imageButtonBorder" Fill="Transparent" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{TemplateBinding BorderBrush}"/>
+                        <Image Style="{StaticResource flashMessageImageButton}" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="imageButtonBorder" Storyboard.TargetProperty="Fill.Color" To="#FFEEEF65" Duration="0:00:0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="imageButtonBorder" Storyboard.TargetProperty="Fill.Color" To="Transparent" Duration="0:00:0.3" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type local:FlashMessage}">
         <Setter Property="Visibility" Value="Collapsed"/>
-        <Setter Property="MinHeight" Value="50"/>
+        <Setter Property="MinHeight" Value="40"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Margin" Value="0,0,0,20"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FlashMessage}">
@@ -97,9 +154,11 @@
                         </Trigger>
                         <Trigger Property="MessageType" Value="Success">
                             <Setter Property="Background" TargetName="PART_border" Value="{StaticResource flashMessageSuccessBackground}"/>
+                            <Setter Property="Style" TargetName="PART_button" Value="{StaticResource flashMessageSuccessButton}"/>
                         </Trigger>
                         <Trigger Property="MessageType" Value="Notice">
                             <Setter Property="Background" TargetName="PART_border" Value="{StaticResource flashMessageNoticeBackground}"/>
+                            <Setter Property="Style" TargetName="PART_button" Value="{StaticResource flashMessageNoticeButton}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
