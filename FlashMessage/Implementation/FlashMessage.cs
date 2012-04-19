@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace FlashMessage
 {
-    public class FlashMessage : Control
+    public class FlashMessage : Control //TODO: change code to use VisualStateManager.
     {
         private DispatcherTimer fadeOutTimer;
 
