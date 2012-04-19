@@ -11,6 +11,7 @@ namespace Sample.FlashMessage
         private MessageType selectedMessageType;
         private string message;
         private string flashMessage;
+        private bool fadesOutAutomatically;
         private RelayCommand showCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -73,6 +74,19 @@ namespace Sample.FlashMessage
 
                 this.flashMessage = value;
                 this.OnPropertyChanged("FlashMessage");
+            }
+        }
+
+        public bool FadesOutAutomatically
+        {
+            get { return this.fadesOutAutomatically; }
+            set
+            {
+                if (this.fadesOutAutomatically == value)
+                    return;
+
+                this.fadesOutAutomatically = value;
+                this.OnPropertyChanged("FadesOutAutomatically");
             }
         }
 

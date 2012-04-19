@@ -10,6 +10,9 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
         </Style>
+        <Style x:Key="check" TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <local:SampleViewModel />
@@ -24,19 +27,24 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="27"/>
             <RowDefinition Height="27"/>
+            <RowDefinition Height="27"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
-        <flash:FlashMessage Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Message="{Binding FlashMessage, Mode=TwoWay}" MessageType="{Binding SelectedMessageType}"/>
+        <flash:FlashMessage Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Message="{Binding FlashMessage, Mode=TwoWay}" MessageType="{Binding SelectedMessageType}" FadesOutAutomatically="{Binding FadesOutAutomatically}"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource label}" Text="Message type:"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding MessageTypes}" SelectedItem="{Binding SelectedMessageType, Mode=TwoWay}" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource label}" Text="Message type:"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MessageTypes}" SelectedItem="{Binding SelectedMessageType, Mode=TwoWay}" />
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource label}" Text="Message:"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" />
-        
-        <Button Grid.Row="2" Grid.Column="2" Content="Show" Height="23" Width="75" Command="{Binding ShowCommand}" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource label}" Text="Message:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" />
+
+        <CheckBox Grid.Row="4" Grid.Column="1" Style="{StaticResource check}" Content="Fades out automatically?" IsChecked="{Binding FadesOutAutomatically}" />
+
+        <Button Grid.Row="4" Grid.Column="2" Content="Show" Height="23" Width="75" Command="{Binding ShowCommand}" />
         
     </Grid>
 </Window>
