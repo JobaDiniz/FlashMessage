@@ -39,7 +39,6 @@
         <Setter Property="Height" Value="22"/>
     </Style>
 
-    <!--TODO: ColorAnimation.To={TemplateBinding BorderBrush}; currently this won't work.-->
     <Style TargetType="Button" BasedOn="{StaticResource flashMessageButton}" x:Key="flashMessageErrorButton">
         <Setter Property="BorderBrush" Value="#E89D9D"/>
         <Setter Property="Template">
